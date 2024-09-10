@@ -7,6 +7,7 @@ namespace QuestionApp1.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
+        // For Non-Observable model objects
         public ObservableCollection<VolumeSetting> VolumeSettings { get; }
 
         [ObservableProperty]
@@ -20,6 +21,24 @@ namespace QuestionApp1.ViewModels
         [ObservableProperty]
         public bool anyRowIsSelected = false;
 
+
+        // For Observable model objects
+
+        public ObservableCollection<ObservableVolumeSetting> ObservableVolumeSettings { get; }
+
+        [ObservableProperty]
+        public ObservableVolumeSetting? selectedObservableVolumeSetting = null;
+
+        partial void OnSelectedObservableVolumeSettingChanged(ObservableVolumeSetting? value)
+        {
+            AnyRowIsSelectedObservable = (value != null);
+        }
+
+        [ObservableProperty]
+        public bool anyRowIsSelectedObservable = false;
+
+
+
         public MainWindowViewModel()
         {
             var volumeSettings = new List<VolumeSetting>
@@ -29,6 +48,14 @@ namespace QuestionApp1.ViewModels
                 new VolumeSetting(75)
             };
             VolumeSettings = new ObservableCollection<VolumeSetting>(volumeSettings);
+
+            var observableVolumeSettings = new List<ObservableVolumeSetting>
+            {
+                new ObservableVolumeSetting(25),
+                new ObservableVolumeSetting(50),
+                new ObservableVolumeSetting(75)
+            };
+            ObservableVolumeSettings = new ObservableCollection<ObservableVolumeSetting>(observableVolumeSettings);
         }
     }
 }

@@ -1,6 +1,6 @@
-# What is the recommend way of editing a model value from multiple controls?
+# How to bind multiple controls to a single model value in Avalonia UI MVVM without making the model object contain [ObservableProperty]
 
-![Alt text](screenshot.png "UI")
+![UI](screenshot.png "UI")
 
 This example is a little contrived but it illustrates the point. It is an app that can toggle between three preset volume levels by clicking the row in the data grid and allow editing of the selected value.
 
@@ -40,21 +40,6 @@ Main Window View Model contains a model object, in fact an observable collection
                     new VolumeSetting(75)
                 };
                 VolumeSettings = new ObservableCollection<VolumeSetting>(volumeSettings);
-            }
-        }
-    }
-
-The model object is as simple as could be, just containing one property
-
-    namespace QuestionApp1.Models
-    {
-        public class VolumeSetting
-        {
-            public int Volume { set; get; }
-
-            public VolumeSetting(int volume)
-            {
-                Volume = volume;
             }
         }
     }
@@ -106,9 +91,43 @@ All the UI is in the MainWindow.axaml
 	    </StackPanel>
     </Window>
 
+##
+
+The UI is repeated twice. The top has a non-observable model object, it just contains a simple property for the value it contains
+
+    namespace QuestionApp1.Models
+    {
+        public class VolumeSetting
+        {
+            public int Volume { set; get; }
+
+            public VolumeSetting(int volume)
+            {
+                Volume = volume;
+            }
+        }
+    }
+
+The bottom UI makes this attribute observable,
+
+    public partial class ObservableVolumeSetting : ObservableObject
+    {
+        [ObservableProperty]
+        public int volume;
+
+        public ObservableVolumeSetting(int volume)
+        {
+            Volume = volume;
+        }
+    }
+
 ## Problems
 
+With non-observable model-object I get the three issues:
 1. When the slider edit the value the other control to not update
 2. When the numerical up and down edits the value the other control to not update.
 3. When editing the value in the table value the other controls to not update.
 
+These are all fixed by switching to an observable object.
+
+I have heard that is bad practice, but the code does not seem that bad too me.

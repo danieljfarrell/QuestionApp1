@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,17 @@ namespace QuestionApp1.Models
         public int Volume { set; get; }
 
         public VolumeSetting(int volume)
+        {
+            Volume = volume;
+        }
+    }
+
+    public partial class ObservableVolumeSetting : ObservableObject
+    {
+        [ObservableProperty]
+        public int volume;
+
+        public ObservableVolumeSetting(int volume)
         {
             Volume = volume;
         }

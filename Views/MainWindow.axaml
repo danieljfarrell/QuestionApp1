@@ -15,7 +15,7 @@
     </Design.DataContext>
 
 	<StackPanel Margin="20">
-		<Label>Volume:</Label>
+		<Label>Volume (Non-Observable Model Object):</Label>
 		<Slider Value="{Binding SelectedVolumeSetting.Volume}" IsEnabled="{Binding AnyRowIsSelected}"></Slider>
 		<NumericUpDown FormatString="N0" Minimum="0" Maximum="100" Increment="5" Value="{Binding SelectedVolumeSetting.Volume}" IsEnabled="{Binding AnyRowIsSelected}"></NumericUpDown>
 		<DataGrid Margin="20" Height="200" ItemsSource="{Binding VolumeSettings}" SelectedItem="{Binding SelectedVolumeSetting}"
@@ -32,6 +32,31 @@
 					</DataGridTemplateColumn.CellTemplate>
 					<DataGridTemplateColumn.CellEditingTemplate>
 						<DataTemplate DataType="m:VolumeSetting">
+							<NumericUpDown Value="{Binding Volume}"
+							   FormatString="N0" Minimum="0" Maximum="100" Increment="10"
+							   HorizontalAlignment="Stretch"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellEditingTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Label>Volume (Observable Model Object):</Label>
+		<Slider Value="{Binding SelectedObservableVolumeSetting.Volume}" IsEnabled="{Binding AnyRowIsSelectedObservable}"></Slider>
+		<NumericUpDown FormatString="N0" Minimum="0" Maximum="100" Increment="5" Value="{Binding SelectedObservableVolumeSetting.Volume}" IsEnabled="{Binding AnyRowIsSelectedObservable}"></NumericUpDown>
+		<DataGrid Margin="20" Height="200" ItemsSource="{Binding ObservableVolumeSettings}" SelectedItem="{Binding SelectedObservableVolumeSetting}"
+				  AutoGenerateColumns="False" IsReadOnly="False"
+				  GridLinesVisibility="All"
+				  BorderThickness="1" BorderBrush="Gray">
+			<DataGrid.Columns>
+				<DataGridTemplateColumn Header="Volume">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate DataType="m:ObservableVolumeSetting">
+							<TextBlock Text="{Binding Volume, StringFormat='{}{0}'}"
+							  VerticalAlignment="Center" HorizontalAlignment="Center" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+					<DataGridTemplateColumn.CellEditingTemplate>
+						<DataTemplate DataType="m:ObservableVolumeSetting">
 							<NumericUpDown Value="{Binding Volume}"
 							   FormatString="N0" Minimum="0" Maximum="100" Increment="10"
 							   HorizontalAlignment="Stretch"/>
