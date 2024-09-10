@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:QuestionApp1.ViewModels"
+		xmlns:m="using:QuestionApp1.Models"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="QuestionApp1.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="QuestionApp1">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<StackPanel Margin="20">
+		<Label>Volume:</Label>
+		<Slider Value="{Binding SelectedVolumeSetting.Volume}" IsEnabled="{Binding AnyRowIsSelected}"></Slider>
+		<NumericUpDown FormatString="N0" Minimum="0" Maximum="100" Increment="5" Value="{Binding SelectedVolumeSetting.Volume}" IsEnabled="{Binding AnyRowIsSelected}"></NumericUpDown>
+		<DataGrid Margin="20" Height="200" ItemsSource="{Binding VolumeSettings}" SelectedItem="{Binding SelectedVolumeSetting}"
+				  AutoGenerateColumns="False" IsReadOnly="False"
+				  GridLinesVisibility="All"
+				  BorderThickness="1" BorderBrush="Gray">
+			<DataGrid.Columns>
+				<DataGridTemplateColumn Header="Volume">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate DataType="m:VolumeSetting">
+							<TextBlock Text="{Binding Volume, StringFormat='{}{0}'}"
+							  VerticalAlignment="Center" HorizontalAlignment="Center" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+					<DataGridTemplateColumn.CellEditingTemplate>
+						<DataTemplate DataType="m:VolumeSetting">
+							<NumericUpDown Value="{Binding Volume}"
+							   FormatString="N0" Minimum="0" Maximum="100" Increment="10"
+							   HorizontalAlignment="Stretch"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellEditingTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+	</StackPanel>
+	
+</Window>
