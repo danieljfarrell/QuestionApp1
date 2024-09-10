@@ -1,6 +1,6 @@
 # What is the recommend way of editing a model value from multiple controls?
 
-![Alt text](screenshot.jpg "UI")
+![Alt text](screenshot.png "UI")
 
 This example is a little contrived but it illustrates the point. It is an app that can toggle between three preset volume levels by clicking the row in the data grid and allow editing of the selected value.
 
